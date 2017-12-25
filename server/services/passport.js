@@ -39,7 +39,9 @@ passport.use(new GoogleStrategy(
 			clientSecret: GOOGLE_CLIENT_SECRET,
 			//after the user grants permission, send them to this route (redirect URI)
 			//you can see on console.developers.google that we set 'Authorize Redirect URI' to http://localhost:3000/auth/google/callback'. The path will be appended with the authorization code for access
-			callbackURL: '/auth/google/callback'
+			callbackURL: '/auth/google/callback',
+			//proxy true means that if we go through a proxy, like the heroku proxy, keep connection secured
+			proxy: true
 		},
 		/*this callback function is executed when the user gets sent back to our server.
 			so we can now use the info to create the user in our database.
