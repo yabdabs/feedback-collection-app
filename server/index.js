@@ -8,7 +8,10 @@ const keys = require('../config/keys')
 require('./services/passport')
 
 
-/*tell passport to make use of cookies to manage authentication inside of our application. The purpose of cookies is to help us keep track of the user who is logged in, since http is stateless. So whenever browser makes any request to the server, it will send that cookie(with identifying info) in the request. cookieSession extracts cookie data and then passport pulls user id out of cookie data, then deserializeUser*/
+/*tell passport to make use of cookies to manage authentication inside of our application. The purpose of cookies is to help us keep track of the user who is logged in, since http is stateless. So whenever browser makes any request to the server, it will send that cookie(with identifying info) in the request. cookieSession extracts cookie data (and stores it in req.session)and then passport pulls user id out of cookie data, then deserializeUser.
+
+req.session contains the data that passport is trying to store inside the cookie
+*/
 app.use(cookieSession({
 	maxAge: 30 * 24 * 60 * 60 * 1000,
 	keys: [keys.cookieKey]
@@ -25,6 +28,8 @@ app.use('/auth', require('./routes/authRoutes'))
 app.get('/api/something', (req,res) =>{
 	//after deserializeUser, user from db is added to req
 	res.send(req.user)
+	// req.session contains the data that passport is trying to store inside the cookie. So cookie session extracts cookie data cookie, which came from request, and assigns it to req.session, then passes to passport. When the req object is passed to passport and passport is trying to pull user data out of the cookie, it is actually looking inside of req.session to do this. And then from here it passes it on to deserialize user.
+	console.log(req.session)
 })
 
 

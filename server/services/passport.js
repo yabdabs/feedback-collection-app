@@ -22,7 +22,7 @@ passport.serializeUser( (user,done) =>{
 
 /* purpose is to take id and turn it back into model instance.
 when an http request is made, it will send the cookie with identifying info inside. This identifying piece of info is passed into deserializeUser to turn it into a user ... i.e use cookie info to check for user in DB.
-After this, the user model instance should be added to req object as req.user */
+After this, the user model instance should be added to req object as req.users */
 passport.deserializeUser( (id,done)=>{
 	User.findById(id)
 		.then( (user)=>{
