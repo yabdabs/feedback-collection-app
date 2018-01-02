@@ -38,9 +38,9 @@ passport.use(new GoogleStrategy(
 			clientID: GOOGLE_CLIENT_ID,
 			clientSecret: GOOGLE_CLIENT_SECRET,
 			//after the user grants permission, send them to this route (redirect URI)
-			//you can see on console.developers.google that we set 'Authorize Redirect URI' to http://localhost:3000/auth/google/callback'. The path will be appended with the authorization code for access
+			//you can see on console.developers.google that we set 'Authorize Redirect URI' to http://localhost:5000/auth/google/callback'. The path will be appended with the authorization code for access
 			callbackURL: '/auth/google/callback',
-			//proxy true means that if we go through a proxy, like the heroku proxy, keep connection secured
+			//proxy true means that if we go through a proxy, like the heroku proxy, keep connection secured	
 			proxy: true
 		},
 		/*this callback function is executed when the user gets sent back to our server.
@@ -48,44 +48,33 @@ passport.use(new GoogleStrategy(
 			Access Token is what gives us access to the user.
 			Refresh token allows us to refresh the access token since it expires in time.
 			Profile has user information.	
+			-We are using async/await syntax here
 			*/
-		(accessToken, refreshToken, profile, done) => {
+		async (accessToken, refreshToken, profile, done) => {
 			console.log('access Token:', accessToken);
 			console.log('refreshToken:', refreshToken)
 			console.log('profile:', profile)
 			console.log('done:', done	)
 
-
-			//using promises
 			//check to see if user with this googleId already exists
-			User.findOne({googleId:profile.id})
-				.then( (match) => {
-					if(match){
-						//user is already in db, skip
-						//first arg in done is err obj, so it's null here since we have match
-						return done(null, match)
-					}
-					else{
-						//if user has not been created, create and save to db
-						const newUser = new User({
-							googleId: profile.id,
-							email: profile.emails[0].value,
-							name: profile.displayName
-						})
-						newUser.save()
-							.then( (savedUser) =>{
-								//the done callback says to resume the auth process
-								// the next step is serialize, I think. savedUser gets passed to serialize
-								return done(null, savedUser)
-							})
-							.catch((err)=>{
-								console.log(err)
-							})
-					}//end else
-				})
-				.catch((err)=>{
-					console.log(err)
-				})
+			const match = await User.findOne({googleId: profile.id})
+
+			if(match){
+				return done(null, match)
+			}
+
+			//if user has not been created, create and save to db
+			const newUser = new User({
+				googleId: profile.id,
+				email: profile.emails[0].value,
+				name: profile.displayName
+			})
+
+			const savedUser =	await newUser.save()
+			//the done callback says to resume the auth process
+			// the next step is serialize, I think. savedUser gets passed to serialize
+			return done(null, savedUser)
+
 		}//end arrow function
 	)//end GoogleStrategy
 );
@@ -97,26 +86,33 @@ module.exports = passport
 
 
 
-// USING CALLBACK FUNCTION INSTEAD OF ES6 PROMISES
+// //using promises
 // //check to see if user with this googleId already exists
-// User.findOne({googleId: profile.id}, function(err, match){
-// 	if(err) throw err
-
-// 	//user is already in db, skip
-// 	if(match){
-// 		return done(null, match)
-// 	}
-// 	else{
-// 		//if user has not been created, create and save to db
-// 		const newUser = new User({
-// 			googleId: profile.id, 
-// 			email: profile.emails[0].value, 
-// 			name: profile.displayName
-// 		})
-
-// 		newUser.save(function(err){
-// 			if (err) throw err;
-// 		})
-
-// 	}//end else
-// })//end findOne()
+// User.findOne({googleId:profile.id})
+// 	.then( (match) => {
+// 		if(match){
+// 			//user is already in db, skip
+// 			//first arg in done is err obj, so it's null here since we have match
+// 			return done(null, match)
+// 		}
+// 		else{
+// 			//if user has not been created, create and save to db
+// 			const newUser = new User({
+// 				googleId: profile.id,
+// 				email: profile.emails[0].value,
+// 				name: profile.displayName
+// 			})
+// 			newUser.save()
+// 				.then( (savedUser) =>{
+// 					//the done callback says to resume the auth process
+// 					// the next step is serialize, I think. savedUser gets passed to serialize
+// 					return done(null, savedUser)
+// 				})
+// 				.catch((err)=>{
+// 					console.log(err)
+// 				})
+// 		}//end else
+// 	})
+// 	.catch((err)=>{
+// 		console.log(err)
+// 	})
