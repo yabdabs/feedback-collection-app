@@ -1,17 +1,22 @@
+import 'materialize-css/dist/css/materialize.min.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-
 import App from './components/App'
-//looks at index/js
+
+//looks at index.js file, meaning importing combineReducers?
 import reducers from './reducers'
+import reduxThunk from 'redux-thunk'
+
+//we need this because of ascync nature of axios call. It returns a promise and this middleware handles that promise for us
+import promise from 'redux-promise'
 
 //create a new instance of our redux store
 //first arg is reducers we have in application
 //second is initial state of application
 //third is applyMiddleware
-const store = createStore(reducers, {}, applyMiddleware())
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk, promise))
 
 ReactDOM.render(
 	// Provider is a React component given to us by the “react-redux” library. 
