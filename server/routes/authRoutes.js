@@ -35,6 +35,6 @@ module.exports = (app) =>{
 		//after deserializeUser, user from db is added to req
 		res.send(req.user)
 		// req.session contains the data that passport is trying to store inside the cookie. So cookie session extracts cookie data cookie, which came from request, and assigns it to req.session, then passes to passport. When the req object is passed to passport and passport is trying to pull user data out of the cookie, it is actually looking inside of req.session to do this. And then from here it passes it on to deserialize user.
-		console.log(req.session)
+		console.log('req.session', req.session)
 	})
 }

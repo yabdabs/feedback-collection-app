@@ -1,3 +1,7 @@
 .landing{
 	text-align: center;
 }
+
+.stripe-checkout{
+	color: red !important;
+}

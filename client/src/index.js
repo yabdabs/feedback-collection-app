@@ -28,3 +28,7 @@ ReactDOM.render(
 	</Provider>,
 	document.getElementById('root')
 )
+
+console.log('STRIPE KEY IS', process.env.REACT_APP_STRIPE_PUB_KEY)
+
+console.log('STRIPE KEY IS', process.env.NODE_ENV)

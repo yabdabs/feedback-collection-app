@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logoutUser } from '../actions/index'
+import Payments from './Payments'
 
 class Header extends Component{
 
@@ -19,7 +20,11 @@ class Header extends Component{
 				return <li><a href="/auth/google">Google Sign In</a></li>
 
 			default:
-				return <div><li><a>{this.props.auth.name}</a></li><li><Link to='/' onClick={this.logoutUser}>Logout</Link></li></div>
+				return[ 
+								<li key='1'><Payments /></li>,
+								<li key='2'><a>{this.props.auth.name}</a></li>,
+								<li key='3'><Link to='/' onClick={this.logoutUser}>Logout</Link></li>
+							]
 		}
 	}
 
