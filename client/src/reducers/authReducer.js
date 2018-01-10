@@ -8,7 +8,7 @@ export default function(state= null, action){
 	switch(action.type){
 		case FETCH_USER:
 			console.log('inside of FETCH_USER reducer case', action)
-		
+			// console.log('state inside of auth reducer', state) //null initially?
 			return action.payload || false
 
 		default:

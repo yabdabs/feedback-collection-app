@@ -27,6 +27,17 @@ export const logoutUser = () =>{
 	}
 }
 
+export const handleToken = (token) =>{
+	console.log('inside handleToken action creator...logging token', token)
+	return async (dispatch) => {
+		const res = await axios.post('/api/stripe', token)
+		console.log('inside of handleToken action creator res,', res)
+
+		dispatch({ type: FETCH_USER, payload: res.data })
+
+	}
+}
+
 
 
 

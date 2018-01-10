@@ -7,7 +7,7 @@ var User = require('../database/models/user')
 
 
 
-/* purpose is to take model instance and turn it into id
+/* purpose is to take model instance(user document) and turn it into id
 purpose is to generate identifying piece of info from the user in DB that can be stored in cookie */
 passport.serializeUser( (user,done) =>{
 	/*Lecture 39
@@ -60,6 +60,7 @@ passport.use(new GoogleStrategy(
 			const match = await User.findOne({googleId: profile.id})
 
 			if(match){
+				//done basically nudges on ot the next passport flow/proccess/w.e (serialize user? passing on match, which is the user frmo the db)
 				return done(null, match)
 			}
 

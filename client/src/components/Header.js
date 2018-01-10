@@ -56,7 +56,7 @@ class Header extends Component{
 // Since reducers hold our application level state, and we are in a component, that means if we want to use app level state inside of our component, we must use mapStateToProps. app level state and store are the same thing
 //mapStateToProps is saying map the app level state to the components props
 function mapStateToProps(state){
-	console.log('inside of mapStateToProps in Header', state)
+	console.log('inside of mapStateToProps in Header (state.auth)', state.auth)
 	return{
 		auth: state.auth
 	}
