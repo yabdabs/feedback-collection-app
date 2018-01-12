@@ -10,6 +10,10 @@ const userSchema = new Schema({
 	},
 	email: String,
 	name: String,
+	credits: {
+		type: Number,
+		default: 0
+	}
 
 })
 //To use our schema definition, we need to convert our userSchema into a Model we can work with. To do so, we pass it into mongoose.model(modelName, schema):
