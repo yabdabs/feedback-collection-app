@@ -34,9 +34,7 @@ require('./routes/billingRoutes.js')(app)
 if(process.env.NODE_ENV === 'production'){
 
 // (If we do not have express route handler for the request), This first checks to see if there is a file the request is looking for. Express will serve up production assets like our main.js file or main.css file.
-  app.use(express.static(path.join(__dirname, '/../client/build'));
-
-
+  app.use(express.static(path.join(__dirname, '/../client/build')));
 
 	// //if we don't know what the route is, serve up the index.html file
 	// app.get('*', (req,res) => {
