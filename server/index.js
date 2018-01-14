@@ -40,10 +40,10 @@ if(process.env.NODE_ENV === 'production'){
 	app.use(express.static(__dirname, '/../client/build'))
 
 	// const path = require('path')
-	// //if we don't know what the route is, serve up the index.html file
-	// app.get('*', (req,res) => {
-	// 	res.sendFile(path.join(__dirname, '/../../client/build/index.html'))
-	// })
+	//if we don't know what the route is, serve up the index.html file
+	app.get('*', (req,res) => {
+		res.sendFile(path.join(__dirname, '/../client/build/index.html'))
+	})
 }
 
 const PORT = process.env.PORT || 5000;
