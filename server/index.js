@@ -5,7 +5,6 @@ const dbConnection = require('./database')
 const keys = require('../config/keys')
 const bodyParser = require('body-parser')
 require('./services/passport')
-const path = require('path')
 const app = express();
 
 app.use(bodyParser.json())
