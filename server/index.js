@@ -7,7 +7,6 @@ const bodyParser = require('body-parser')
 require('./services/passport')
 
 const app = express();
-const path = require('path')
 
 app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({ extended: false }))
@@ -39,7 +38,7 @@ if(process.env.NODE_ENV === 'production'){
 // (If we do not have express route handler for the request), This first checks to see if there is a file the request is looking for. Express will serve up production assets like our main.js file or main.css file.
   app.use(express.static('client/build'));
 
-	// const path = require('path')
+	const path = require('path')
 	//if we don't know what the route is, serve up the index.html file
 	app.get('*', (req,res) => {
 		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
