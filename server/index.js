@@ -35,10 +35,11 @@ if(process.env.NODE_ENV === 'production'){
 	var path = require('path')
 
 	/*(If we do not have express route handler for the request), This first checks to see if there is a file the request is looking for. Express will serve up production assets like our main.js file or main.css file. */
-
   app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-	//if we don't know what the route is, serve up the index.html file
+	/*if we don't know what the route is, serve up the index.html file (assume react router side of app is respon).
+	to serve up the index.html file, which is where all react stuff is, it also needs js and css files connected to it(bc of script/Link tags). So it will ask for those files, and that's what the above handles first. 
+	*/
 	app.get('*', (req,res) => {
 		res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 	})
