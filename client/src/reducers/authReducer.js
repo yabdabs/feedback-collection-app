@@ -1,6 +1,6 @@
 //a reducer is just a function that returns state?/handles our app state
 
-//this reducer is for weather or not the user is currently logged in. I also added on logging out action creator to the FETCH_USER case. when the user logs out, null is returned from server, which is false. so action.payload is false/null. So Auth state gets updated to false, and then the sign in componenent in header is rendered.
+/*this reducer is for weather or not the user is currently logged in. I also added on logging out action creator to the FETCH_USER case. when the user logs out, null is returned from server, which is false. so action.payload is false/null. So Auth state gets updated to false, and then the sign in componenent in header is rendered. HandleToken action creator also linked to this FETCH_USER case. */
 
 import { FETCH_USER } from '../actions/types'
 
