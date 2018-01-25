@@ -8,7 +8,9 @@ var User = require('../database/models/user')
 
 
 /* purpose is to take model instance(user document) and turn it into id
-purpose is to generate identifying piece of info from the user in DB that can be stored in cookie */
+purpose is to generate identifying piece of info from the user in DB that can be stored in cookie.
+Attaches user to cookie
+*/
 passport.serializeUser( (user,done) =>{
 	/*Lecture 39
 	user represents the user we just pulled out of the db in the GS callback(after saving).
@@ -43,7 +45,7 @@ passport.use(new GoogleStrategy(
 			//proxy true means that if we go through a proxy, like the heroku proxy, keep connection secured	
 			proxy: true
 		},
-		/*this callback function is executed when the user gets sent back to our server.
+		/*this callback function is executed when the user gets sent back to our server after they grant permission 	and google sends back with details about user.
 			so we can now use the info to create the user in our database.
 			Access Token is what gives us access to the user.
 			Refresh token allows us to refresh the access token since it expires in time.

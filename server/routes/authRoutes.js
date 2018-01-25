@@ -5,7 +5,7 @@ const passport = require('passport')
 
 module.exports = (app) =>{
 	/*1.
-	when the user clicks login, they should be directed into the passport authentication flow.
+	when the user clicks login, they should be directed into the passport authentication flow in which they have to grant permission.
 	'google' is the GoogleStrategy */
 	app.get('/auth/google',
 		passport.authenticate('google', {
@@ -14,7 +14,9 @@ module.exports = (app) =>{
 	);
 
 	/*2.
-	you can see on this url there is a code. 'google' is the GoogleStrategy. get directed to this url 'auth/google/callback' when user grants permission to email. send request to google with 'code included'. google sees 'code' in url, replies with details about the user. After this request is made, google strategy callback is called.
+	 get directed to this url 'auth/google/callback'(/auth/provider/cb) when user grants permission to email. sends request to google with 'code included'. google sees 'code' in url, replies with details about the user. After this request is made, google strategy callback is called.
+
+	 you can see on this url there is a code. 'google' is the GoogleStrategy.
 	*/
 	app.get('/auth/google/callback', 
 		passport.authenticate('google'),
@@ -34,7 +36,7 @@ module.exports = (app) =>{
 	app.get('/api/current_user', (req,res) =>{
 		//after deserializeUser, user from db is added to req
 		res.send(req.user)
-		// req.session contains the data that passport is trying to store inside the cookie. So cookie session extracts cookie data cookie, which came from request, and assigns it to req.session, then passes to passport. When the req object is passed to passport and passport is trying to pull user data out of the cookie, it is actually looking inside of req.session to do this. And then from here it passes it on to deserialize user.
+		// req.session contains the data that passport is trying to store inside the cookie. So cookie session extracts cookie data, which came from request, and assigns it to req.session, then passes to passport. When the req object is passed to passport and passport is trying to pull user data out of the cookie, it is actually looking inside of req.session to do this. And then from here it passes it on to deserialize user.
 		console.log('req.session', req.session)
 	})
 }
